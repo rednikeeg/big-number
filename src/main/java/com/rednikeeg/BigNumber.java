@@ -8,17 +8,10 @@ import java.util.Arrays;
  * @author Maksym "rednikeeg" Bohachov
  * @see LAMath
  */
-public class BigNumber {
+public final class BigNumber {
     private final int[] content;
     private static final int LENGTH = 100;
     private final boolean isNegative;
-
-    private BigNumber() {
-        content = new int[LENGTH];
-        Arrays.fill(content, 0);
-
-        isNegative = false;
-    }
 
     public BigNumber(BigNumber num) {
         content = new int[LENGTH];
@@ -37,17 +30,37 @@ public class BigNumber {
         content = parse(str);
     }
 
+    private BigNumber(int[] content, boolean isNegative) {
+        this.content = parse(content);
+        this.isNegative = isNegative;
+    }
+
+    private int[] parse() {
+        int[] result = new int[LENGTH];
+
+        Arrays.fill(result, 0);
+
+        return result;
+    }
+
     private int[] parse(String str) {
         char[] chars = str.toCharArray();
 
-        int[] result = new int[LENGTH];
-        Arrays.fill(content, 0);
+        int[] result = parse();
 
         int length = chars.length;
 
         for (int i = LENGTH - 1; i >= LENGTH - length - 1; i--) {
             result[i] = parse(chars[i - length]);
         }
+
+        return result;
+    }
+
+    private int[] parse(int[] arr) {
+        int[] result = parse();
+
+        System.arraycopy(content, 0, result, LENGTH - content.length, content.length);
 
         return result;
     }
@@ -61,6 +74,10 @@ public class BigNumber {
     }
 
     public BigNumber minus(BigNumber num) {
+        throw new UnsupportedOperationException();
+    }
+
+    private static BigNumber minus(BigNumber higher, BigNumber lower, boolean isNegative) {
         throw new UnsupportedOperationException();
     }
 
